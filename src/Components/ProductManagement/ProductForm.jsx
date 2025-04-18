@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-const ProductForm = () => {
+const ProductForm = ({handleAddToProduct}) => {
+
+    const [error,setError]=useState("");
 
     const handleSubmitForm =(e)=>{
         e.preventDefault();
@@ -13,7 +15,25 @@ const ProductForm = () => {
             quantity,
         }
 
-        console.log(newProduct)
+        if(name.length==0){
+            setError("please provided the product name..");
+            return;
+        }
+        else if(price<=0){
+            setError("please provided the valided product price .. ");
+            return;
+        }
+
+        else if(quantity<=0){
+            setError("please provided the valid product quantity..");
+            return;
+        }
+
+        else{
+            setError("")
+        }
+
+        handleAddToProduct(newProduct);
 
     }
     return (
@@ -27,6 +47,8 @@ const ProductForm = () => {
 
 
             </form>
+
+            <p><small style={{color:'red'}}>{error}</small></p>
         </div>
     );
 };
